@@ -1,0 +1,413 @@
+openapi: 3.0.4
+info:
+  title: Library Management API
+  description: 'This API provides information about the Library Management System'
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: marcelokathmk@gmail.com
+servers:
+  - url: http://localhost:9000/library/api
+    description: Default Server.
+tags:
+  - name: books
+    description: Operations to manage the books.
+  - name: loans
+    description: Operations to manage the book loans
+  - name: user
+    description: Operation To perform the login in the service
+  - name: fees
+    description: Operation to manage the fees.
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - user
+      summary: Perform the login from a given login and password
+      description: Service to provide the JWT that will be used for the authorization in the system endpoints
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginApiRequest'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenApiResponse'
+
+  /books:
+    get:
+      tags:
+        - books
+      summary: Search books.
+      description: Service responsible to search books in the library inventory.
+      operationId: searchBooks
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: title
+          in: query
+          description: 'filter by title'
+          schema:
+            type: string
+        - name: author
+          in: query
+          description: 'filter by author'
+          schema:
+            type: string
+        - name: genre
+          in: query
+          description: 'filter by genre'
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: 'Page number'
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          in: query
+          description: 'Number of records to return'
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponseList'
+
+    post:
+      tags:
+        - books
+      summary: Create a book.
+      description: Service responsible for create a new book.
+      operationId: addBook
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookApiRequest'
+      responses:
+        '201':
+          description: Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+
+  /books/{book_id}:
+    get:
+      tags:
+        - books
+      summary: Search book.
+      description: Service to provide the search for the book stored in the inventory.
+      operationId: searchBook
+      parameters:
+        - in: path
+          name: book_id
+          description: 'The id of the book to be searched.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+
+    patch:
+      tags:
+        - books
+      summary: Update a book.
+      description: Service responsible for update the book details.
+      operationId: updateBook
+      parameters:
+        - in: path
+          name: book_id
+          description: 'The id of the book to be updated.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookApiRequest'
+      responses:
+        '200':
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+
+    delete:
+      tags:
+        - books
+      summary: Delete a book.
+      description: Service responsible for logically delete a given book.
+      operationId: deleteBook
+      parameters:
+        - in: path
+          name: book_id
+          description: 'The id of the book to be deleted.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '204':
+          description: 'No Content'
+
+  /loans:
+    post:
+      tags:
+        - loans
+      summary: Borrow a given book.
+      description: Service responsible to borrow a given book by a given user logged.
+      operationId: borrowBook
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanApiRequest'
+      responses:
+        '201':
+          description: Created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanApiResponse'
+
+  /loans/{book_id}/return:
+    patch:
+      tags:
+        - loans
+      summary: Return to the library a given book previously borrowed.
+      description: Return to the library a given book previously borrowed.
+      operationId: returnBook
+      parameters:
+        - in: path
+          name: book_id
+          description: 'The id of the book to be updated.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanApiResponse'
+
+  /loans/{book_id}/history:
+    get:
+      tags:
+        - loans
+      summary: Loan history of the book.
+      description: Loan history of the book.
+      operationId: bookHistory
+      parameters:
+        - in: path
+          name: book_id
+          description: 'The id of the book to be deleted.'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: 'Success.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanApiResponseList'
+
+  /fees:
+    get:
+      tags:
+        - fees
+      summary: Get the fee.
+      description: Get the fee.
+      operationId: getFee
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeApiObject'
+
+    put:
+      tags:
+        - fees
+      summary: Update the fee value.
+      description: Update the fee value.
+      operationId: updateFee
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeeApiObject'
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeApiObject'
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    LoginApiRequest:
+      type: object
+      description: 'Request object used in the login endpoint'
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+
+    BookApiRequest:
+      type: object
+      description: 'Request object used in for manage books'
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        publication_year:
+          type: integer
+        genre:
+          type: string
+        notes:
+          type: string
+
+    LoanApiRequest:
+      type: object
+      description: 'Request object used for borrow a book'
+      properties:
+        book_id:
+          type: integer
+          format: int64
+
+    FeeApiObject:
+      type: object
+      description: 'Request object user to update a fee'
+      properties:
+        id:
+          type: integer
+          format: int64
+        fee_value:
+          type: number
+
+    TokenApiResponse:
+      type: object
+      description: 'Object to return the JWT generated'
+      properties:
+        token:
+          type: string
+
+    BookApiResponse:
+      type: object
+      description: 'Object to store the book attributes'
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        author:
+          type: string
+        publication_year:
+          type: integer
+        genre:
+          type: string
+        notes:
+          type: string
+
+    BookApiResponseList:
+      description: 'List of books'
+      properties:
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookApiResponse'
+
+    LoanApiResponse:
+      type: object
+      description: 'Object to store the book loan details'
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_name:
+          type: string
+        book:
+          $ref: '#/components/schemas/BookApiResponse'
+        loan_date:
+          type: string
+          format: date-time
+        due_date:
+          type: string
+          format: date-time
+        return_date:
+          type: string
+          format: date-time
+        is_late_return:
+          type: boolean
+        late_return_fee:
+          type: number
+
+    LoanApiResponseList:
+      description: 'List of book loans'
+      properties:
+        loans:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoanApiResponse'

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.company</groupId>
+	<artifactId>librarymanagement</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>librarymanagement</name>
+	<description>Microservice responsible to manage book borrowing and inventory using Java Spring Boot</description>
+
+	<modules>
+		<module>librarymanagement-api</module>
+		<module>librarymanagement-server</module>
+	</modules>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.4</version>
+		<relativePath/>
+	</parent>
+
+	<properties>
+		<librarymanagement-api.version>1.0.0-SNAPSHOT</librarymanagement-api.version>
+
+		<java.version>17</java.version>
+		<openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
+		<jackson.core.version>2.18.3</jackson.core.version>
+		<swagger.annotations.version>2.2.29</swagger.annotations.version>
+		<jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+		<org.springdoc.version>2.8.5</org.springdoc.version>
+		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
+	</properties>
+
+</project>
