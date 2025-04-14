@@ -3,6 +3,7 @@ package com.company.librarymanagement.loan.boundary;
 import com.company.librarymanagement.fee.control.FeeService;
 import com.company.librarymanagement.fee.entity.Fee;
 import com.company.librarymanagement.loan.control.LoanService;
+import com.company.librarymanagement.loan.control.event.LoanEventPublisher;
 import com.company.librarymanagement.loan.control.factory.LoanFactory;
 import com.company.librarymanagement.loan.entity.Loan;
 import com.company.librarymanagement.server.api.model.LoanApiRequest;
@@ -29,9 +30,12 @@ public class LoanResource implements LoansApi {
 
     private final FeeService feeService;
 
-    public LoanResource(LoanService loanService, FeeService feeService) {
+    private final LoanEventPublisher eventPublisher;
+
+    public LoanResource(LoanService loanService, FeeService feeService, LoanEventPublisher eventPublisher) {
         this.loanService = loanService;
         this.feeService = feeService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -72,6 +76,8 @@ public class LoanResource implements LoansApi {
         final String userAuthenticated = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Loan loan = loanService.returnBook(bookId, userAuthenticated);
+
+        eventPublisher.publishReturnedBookEvent("The book with ID: "+ bookId +" has been returned and is now available for loan.", bookId);
 
         Fee fee = feeService.getFee();
 
