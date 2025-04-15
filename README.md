@@ -16,7 +16,7 @@
 - https://hub.docker.com/_/postgres
 - https://openapi-generator.tech/docs/generators/spring/#metadata
 
-## Prerequisites
+## Pre-requisites
 It is necessary to install Git, Java 17, Maven, and Docker on the local machine:
 - https://git-scm.com/downloads
 - https://www.oracle.com/java/technologies/javase/jdk17-0-13-later-archive-downloads.html
