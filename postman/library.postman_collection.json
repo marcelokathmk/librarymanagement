@@ -1,0 +1,474 @@
+{
+	"info": {
+		"_postman_id": "04bf4fc0-4d6a-4bf4-9631-81da762a92a1",
+		"name": "Library Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3460710"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login as an Owner",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"user_owner\",\n    \"password\": \"myownerpasswordencrypted\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login as a Client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"user_client\",\n    \"password\": \"myclientpasswordencrypted\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book Management",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1MzI0NDMsImV4cCI6MTc0NDUzNjA0M30.9fM-IpkRtPXFG_hRi77FDQR8nDpvStu7fV3Hpjj0F8mrz9rD8VHXlnAlU5MC2P8ya8axpZjuVtPUPa9DkNoPwA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"The Book Thief\",\n    \"author\": \"Markus Zusak\",\n    \"publication_year\": 2005,\n    \"genre\": \"Drama\",\n    \"notes\": \"The Book Thief é um drama do escritor australiano Markus Zusak, publicado em 2005 pela editora Picador. No Brasil e em Portugal, foi lançado pela Intrínseca e a Presença, respetivamente. O livro é sobre Liesel Meminger, uma garota que encontra a Morte três vezes durante 1939–43 na Alemanha nazista.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1MzI0NDMsImV4cCI6MTc0NDUzNjA0M30.9fM-IpkRtPXFG_hRi77FDQR8nDpvStu7fV3Hpjj0F8mrz9rD8VHXlnAlU5MC2P8ya8axpZjuVtPUPa9DkNoPwA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": null,\n    \"author\": null,\n    \"publication_year\": 2005,\n    \"genre\": null,\n    \"notes\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/books/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1MzI0NDMsImV4cCI6MTc0NDUzNjA0M30.9fM-IpkRtPXFG_hRi77FDQR8nDpvStu7fV3Hpjj0F8mrz9rD8VHXlnAlU5MC2P8ya8axpZjuVtPUPa9DkNoPwA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/library/api/books/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"books",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Book by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1MzUyMDAsImV4cCI6MTc0NDUzODgwMH0.amznqHmbzTA9Xm559dSwh-zVyWr3nCeG18gMwlQXUQ2SORrPO4CxwxGoMSH-KOeUJcci1Zy_RhgNOss0xSa6rg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/library/api/books/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Books",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX2NsaWVudCIsInJvbGUiOiJST0xFX0NMSUVOVCIsImlhdCI6MTc0NDU2OTU0NywiZXhwIjoxNzQ0NTczMTQ3fQ.KVhZQf6DhLBTdQ3S_XseKMh-LKHy9ssTqys9tvV5t4YhysR9iBg3Ws2A6Wx7a4fITotx-kN2_Q2o7ezlyf4IPA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/books?title=&author=&genre=&page=0&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": ""
+								},
+								{
+									"key": "author",
+									"value": ""
+								},
+								{
+									"key": "genre",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan Management",
+			"item": [
+				{
+					"name": "Borrow book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX2NsaWVudCIsInJvbGUiOiJST0xFX0NMSUVOVCIsImlhdCI6MTc0NDU1Nzk4NSwiZXhwIjoxNzQ0NTYxNTg1fQ.nOXR3IIueFqAX_yjvKRQR_wW1-V0_KJVQTkOUwZGMkq-S9LECuztlKksavbWRlmRJkwEeSTJaWLPEDK0_S0G8Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/loans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return Book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX2NsaWVudCIsInJvbGUiOiJST0xFX0NMSUVOVCIsImlhdCI6MTc0NDU1Nzk4NSwiZXhwIjoxNzQ0NTYxNTg1fQ.nOXR3IIueFqAX_yjvKRQR_wW1-V0_KJVQTkOUwZGMkq-S9LECuztlKksavbWRlmRJkwEeSTJaWLPEDK0_S0G8Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/library/api/loans/1/return",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"loans",
+								"1",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book History",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX2NsaWVudCIsInJvbGUiOiJST0xFX0NMSUVOVCIsImlhdCI6MTc0NDU2MTg0NSwiZXhwIjoxNzQ0NTY1NDQ1fQ.iPn1tn2RmfBSFJQNQ6egbFGICQx7jSkA_kOzvojjaO247RRuNHDXUTozbtbtFh3Narie03EcEJiqbInzlY4ADg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/library/api/loans/1/history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"loans",
+								"1",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fee Management",
+			"item": [
+				{
+					"name": "Get Fee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1NzMwMzcsImV4cCI6MTc0NDU3NjYzN30.zKCf_bE0IJBv6BnIqs82GC8j_QnjjrFdXwXURlvkvUfuzP_rEFyPqQu91XX5lpzz2havNP1UNDG1HdOJWeBISQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/library/api/fees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"fees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Fee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyX293bmVyIiwicm9sZSI6IlJPTEVfT1dORVIiLCJpYXQiOjE3NDQ1NzUzODMsImV4cCI6MTc0NDU3ODk4M30.syLqlbsOFLHa-APsAL8GlLybYCDwZtkRvmItU05KDR84bTB-vmGX8PbAXFy_si6IBG1fnvZ48H5nGzGr9sekrg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"fee_value\": 1.55\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/library/api/fees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"library",
+								"api",
+								"fees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

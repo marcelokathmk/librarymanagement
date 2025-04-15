@@ -9,7 +9,7 @@ services:
       - 9000:9000
       - 5005:5005
     env_file:
-      - "library.env"
+      - "envs/service.env"
     depends_on:
       postgres:
         condition: service_healthy
@@ -18,10 +18,8 @@ services:
     image: postgres:15
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: library
+    env_file:
+      - "envs/db.env"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
