@@ -23,6 +23,14 @@ It is necessary to install Git, Java 17, Maven, and Docker on the local machine:
 - https://maven.apache.org/download.cgi
 - https://www.docker.com/products/docker-desktop/
 
+## Architecture
+The microservice has two modules: api and server.
+
+The API module will be responsible for generating the objects and REST interfaces, so that the server module can implement them.
+To generate these interfaces, the OpenAPI Maven plugin was used, which is based on reading the api.yaml file located at the root of the api module.
+
+The server module, in addition to implementing the interfaces generated in the API module, is responsible for generating the final artifact (Jar) as it contains the configurations for the database and the authentication and security rules of the service.
+
 ## Steps to run the service
 You can download the .zip or clone the repo available on: https://github.com/marcelokathmk/librarymanagement
 
@@ -69,7 +77,7 @@ User with role: ROLE_CLIENT
 - login: user_client
 - password: myclientpasswordencrypted
 
-## REST Api´s, Roles and Authorization
+## REST Apis, Roles and Authorization
 
 With the ROLE_OWNER role, it is possible to execute the following REST resources:
 
