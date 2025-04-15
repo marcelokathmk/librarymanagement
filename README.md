@@ -1,13 +1,14 @@
 # Microservice: Library Management
 
-## Technologies used
+## Technologies and libs used
 
 - Java 17
 - Apache Maven
 - OpenApi generator (maven plugin)
-- Spring Boot, Spring Data, Spring Security
+- Spring Boot (spring-boot-starter-web), Spring Data (spring-boot-starter-data-jpa), Spring Security (spring-boot-starter-security)
 - PostgreSQL
 - JPA/Hibernate
+- JWT (io.jsonwebtoken)
 - Docker/Docker Compose
 - Flyway
 
