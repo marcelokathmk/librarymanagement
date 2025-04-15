@@ -1,18 +1,11 @@
 package com.company.librarymanagement.loan.control.exception;
 
 import com.company.librarymanagement.shared.exception.LibraryErrorMessage;
-import org.springframework.http.HttpStatus;
+import com.company.librarymanagement.shared.exception.LibraryException;
 
-public class LoanException extends RuntimeException {
-
-    private final HttpStatus httpStatus;
+public class LoanException extends LibraryException {
 
     public LoanException(LibraryErrorMessage libraryErrorMessage) {
-        super(libraryErrorMessage.getErrorMessage());
-        this.httpStatus = libraryErrorMessage.getHttpStatus();
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
+        super(libraryErrorMessage);
     }
 }

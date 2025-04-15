@@ -1,9 +1,12 @@
 package com.company.librarymanagement.auth.control;
 
+import com.company.librarymanagement.auth.control.exception.AuthException;
 import com.company.librarymanagement.auth.control.repository.UserRepository;
 import com.company.librarymanagement.auth.entity.User;
 import com.company.librarymanagement.auth.security.jwt.JwtUtil;
 import com.company.librarymanagement.shared.decode.Base64Decode;
+import com.company.librarymanagement.shared.exception.LibraryErrorMessage;
+import com.company.librarymanagement.shared.exception.LibraryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,8 +31,7 @@ public class AuthService {
     public User findUserByLogin(final String login) {
         Optional<User> user = userRepository.findByLogin(login);
         if (user.isEmpty()) {
-            throw new RuntimeException();
-            // lança exception
+            throw new AuthException(LibraryErrorMessage.AUTH_USER_NOT_FOUND);
         }
         return user.get();
     }
@@ -37,8 +39,7 @@ public class AuthService {
     public String performUserLoginAndReturnJWT(String login, String password) {
         User user = findUserByLogin(login);
         if (!password.equals(Base64Decode.decodePassword(user.getPassword()))) {
-            // lançar exception
-            return null;
+            throw new AuthException(LibraryErrorMessage.AUTH_PASSWORD_INCORRECT);
         }
         return jwtUtil.generateToken(user.getLogin(), user.getRole());
     }
@@ -50,7 +51,6 @@ public class AuthService {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRoleAsString());
             return new UsernamePasswordAuthenticationToken(user.getLogin(), null, Collections.singletonList(authority));
         }
-        // throw exception
-        return null;
+        throw new AuthException(LibraryErrorMessage.AUTH_INVALID_TOKEN);
     }
 }

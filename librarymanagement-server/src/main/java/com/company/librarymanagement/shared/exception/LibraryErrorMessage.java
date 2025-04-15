@@ -10,7 +10,11 @@ public enum LibraryErrorMessage {
 
     BOOK_NOT_FOUND(HttpStatus.NOT_FOUND,"The Book was not found in the inventory."),
 
-    FEE_NOT_FOUND(HttpStatus.NOT_FOUND,"The fee was not found.");
+    FEE_NOT_FOUND(HttpStatus.NOT_FOUND,"The fee was not found."),
+
+    AUTH_INVALID_TOKEN(HttpStatus.BAD_REQUEST, "The token is invalid or expired."),
+    AUTH_PASSWORD_INCORRECT(HttpStatus.CONFLICT, "The password is not correct."),
+    AUTH_USER_NOT_FOUND(HttpStatus.NOT_FOUND, "The user was not found for the given login.");
 
     private final HttpStatus httpStatus;
 

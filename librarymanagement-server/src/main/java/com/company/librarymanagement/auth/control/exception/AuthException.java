@@ -1,12 +1,11 @@
-package com.company.librarymanagement.fee.control.exception;
+package com.company.librarymanagement.auth.control.exception;
 
 import com.company.librarymanagement.shared.exception.LibraryErrorMessage;
 import com.company.librarymanagement.shared.exception.LibraryException;
 
-public class FeeException extends LibraryException {
+public class AuthException extends LibraryException {
 
-    public FeeException(LibraryErrorMessage libraryErrorMessage) {
+    public AuthException(LibraryErrorMessage libraryErrorMessage) {
         super(libraryErrorMessage);
     }
-
 }

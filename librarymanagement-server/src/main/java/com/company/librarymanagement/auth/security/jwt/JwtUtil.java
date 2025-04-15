@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,11 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String jwtSecret = "library_jwt_secret";
-    private final long jwtExpirationMs = 3600000;
+    @Value("jwt.config.secret")
+    private String jwtSecret;
+
+    @Value("${jwt.config.expiration}")
+    private long jwtExpirationMs;
 
     public String generateToken(String username, UserRole role) {
         return Jwts.builder()
