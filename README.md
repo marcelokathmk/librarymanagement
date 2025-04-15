@@ -68,3 +68,24 @@ User with role: ROLE_OWNER
 User with role: ROLE_CLIENT
 - login: user_client
 - password: myclientpasswordencrypted
+
+With the ROLE_OWNER role, it is possible to execute the following REST resources:
+
+```GET /fees``` to get the fees
+```PUT /fees``` to update the fees value
+
+```GET /loans/{book_id}/history``` to view the loan history of a specific book
+
+```GET /books``` to search/view books filtering by specific fields
+```POST /books``` to create a new book
+```GET /books/{book_id}``` to view the book details
+```DELETE /books/{book_id}``` to logically delete a book
+```PATCH /books/{book_id}``` to edit/change the book details
+
+With the ROLE_OWNER role, it is possible to execute the following REST resources:
+
+```GET /books``` to search/view books filtering by specific fields
+
+```POST /loans``` to borrow a given book
+```PATCH /loans/{book_id}/return``` to return the given book previously borrowed
+
