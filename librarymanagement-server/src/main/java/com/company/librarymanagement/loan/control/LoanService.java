@@ -56,6 +56,7 @@ public class LoanService {
         return book;
     }
 
+    @Transactional
     public Loan returnBook(Long bookId, String userLogin) {
         List<Loan> bookLoans = loanRepository.findByBookIdAndReturnDateIsNullAndReturnedIsFalse(bookId);
 

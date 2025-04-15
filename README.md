@@ -1,6 +1,67 @@
+# Project: Library Management
 
+## Technologies used
 
-# openJDK - Docker official image
-https://hub.docker.com/_/openjdk
-# postgres - Docker official image
-https://hub.docker.com/_/postgres
+- Java 17
+- OpenApi generator (plugin)
+- Spring Boot, Spring Data, Spring Security
+- PostgreSQL
+- JPA/Hibernate
+- Docker/Docker Compose
+- Flyway
+
+## Links and References
+- https://hub.docker.com/_/openjdk
+- https://hub.docker.com/_/postgres
+- https://openapi-generator.tech/docs/generators/spring/#metadata
+
+## Prerequisites
+It is necessary to install Git, Java 17, Maven, and Docker on the local machine:
+- https://git-scm.com/downloads
+- https://www.oracle.com/java/technologies/javase/jdk17-0-13-later-archive-downloads.html
+- https://maven.apache.org/download.cgi
+- https://www.docker.com/products/docker-desktop/
+
+## Steps to run the service
+You can download the .zip or clone the repo available on: https://github.com/marcelokathmk/librarymanagement
+
+The project contains a Docker Compose file that starts the microservice and a PostgreSQL database.
+
+Once the project has been cloned or downloaded, there is a .sh file (execute.sh) in the root directory that builds the service and starts the Docker containers, making the application functional.
+
+Inside this file, the following commands are included:
+
+```mvn clean package``` to download the maven dependencies and build the JAR file
+
+```docker compose -f docker-compose.yml down -v``` to stop the containers configured in the file
+
+```docker compose -f docker-compose.yml build``` to build the docker images in the file
+
+```docker compose -f docker-compose.yml up``` to start the containers configured in the file
+
+At the end of the execute.sh script execution, you can check if the service started successfully by accessing the Swagger UI:
+
+http://localhost:9000/library/api/swagger-ui/index.html#/
+
+It is also possible to verify the availability of the database using a client such as DBeaver, by adding the following authentication information:
+
+- URL: jdbc:postgresql://localhost:5432/library
+- Database: library
+- username: postgres
+- password: postgres
+
+All endpoints, except for /auth/login, are authenticated and require a Bearer token to be provided in the Authorization header of the request.
+
+It is recommended to download the Postman application(https://www.postman.com/downloads/), as there is a JSON file inside the 'Postman' folder that can be imported to find all the existing REST API requests of the microservice.
+
+The application uses the Flyway library to manage the versioning of the database structure, and two users are created when the service is started. The system has 2 authorization roles: ROLE_OWNER and ROLE_CLIENT.
+
+The password is encrypted in the database, so to execute the login endpoint, use one of the following users, depending on which role you need to use:
+
+User with role: ROLE_OWNER
+- login: user_owner
+- password: myownerpasswordencrypted
+
+User with role: ROLE_CLIENT
+- login: user_client
+- password: myclientpasswordencrypted

@@ -10,7 +10,6 @@ import com.company.librarymanagement.server.services.BooksApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +33,6 @@ public class BookResource implements BooksApi {
     public ResponseEntity<BookApiResponse> addBook(BookApiRequest bookApiRequest) {
         logger.info("Entering on addBook, with title '{}'", bookApiRequest.getTitle());
 
-        // implementar uma validação
-
         Book bookCreated = bookService.createBook(bookApiRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -57,7 +54,7 @@ public class BookResource implements BooksApi {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_OWNER') or hasRole('ROLE_CLIENT')")
+    @PreAuthorize("hasRole('ROLE_OWNER')")
     public ResponseEntity<BookApiResponse> searchBook(Long bookId) {
         logger.info("Entering on searchBook, with bookId '{}'", bookId);
 
@@ -73,16 +70,9 @@ public class BookResource implements BooksApi {
 
         Page<Book> bookPage = bookService.searchBooks(title, author, genre, page, limit);
 
-        HttpHeaders headers = new HttpHeaders();
-
-        if (bookPage.hasContent()) {
-            headers.add("x-current-page-number", String.valueOf(bookPage.getNumber()));
-            headers.add("x-total-pages", String.valueOf(bookPage.getTotalPages()));
-            headers.add("x-total-elements", String.valueOf(bookPage.getTotalElements()));
-            headers.add("x-number-of-elements", String.valueOf(bookPage.getNumberOfElements()));
-        }
-
-        return ResponseEntity.ok().headers(headers).body(BookFactory.fromEntityToApi(bookPage));
+        return ResponseEntity.ok()
+                .headers(BookFactory.buildHttpHeadersForSearchBooks(bookPage))
+                .body(BookFactory.fromEntityToApi(bookPage));
     }
 
     @Override

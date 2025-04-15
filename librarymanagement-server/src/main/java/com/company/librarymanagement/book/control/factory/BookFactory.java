@@ -6,6 +6,7 @@ import com.company.librarymanagement.server.api.model.BookApiResponse;
 import com.company.librarymanagement.server.api.model.BookApiResponseList;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -71,5 +72,17 @@ public final class BookFactory {
         }
 
         return response;
+    }
+
+    public static HttpHeaders buildHttpHeadersForSearchBooks(Page<Book> bookPage) {
+        HttpHeaders headers = new HttpHeaders();
+
+        if (bookPage.hasContent()) {
+            headers.add("x-current-page-number", String.valueOf(bookPage.getNumber()));
+            headers.add("x-total-pages", String.valueOf(bookPage.getTotalPages()));
+            headers.add("x-total-elements", String.valueOf(bookPage.getTotalElements()));
+            headers.add("x-number-of-elements", String.valueOf(bookPage.getNumberOfElements()));
+        }
+        return headers;
     }
 }
