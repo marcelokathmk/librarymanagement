@@ -32,6 +32,11 @@ To generate these interfaces, the OpenAPI Maven plugin was used, which is based 
 
 The server module, in addition to implementing the interfaces generated in the API module, is responsible for generating the final artifact (Jar) as it contains the configurations for the database and the authentication and security rules of the service.
 
+## Integration tests
+To run the integration tests, simply execute the following command from the root of the repository:
+
+```mvn clean package integration-test```
+
 ## Steps to run the service
 You can download the .zip or clone the repo available on: https://github.com/marcelokathmk/librarymanagement
 
