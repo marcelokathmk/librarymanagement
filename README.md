@@ -89,7 +89,7 @@ With the ROLE_OWNER role, it is possible to execute the following REST resources
 ```PATCH /books/{book_id}``` to edit/change the book details
 
 
-With the ROLE_OWNER role, it is possible to execute the following REST resources:
+With the ROLE_CLIENT role, it is possible to execute the following REST resources:
 
 ```GET /books``` to search/view books filtering by specific fields
 
