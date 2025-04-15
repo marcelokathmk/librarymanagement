@@ -3,7 +3,8 @@
 ## Technologies used
 
 - Java 17
-- OpenApi generator (plugin)
+- Apache Maven
+- OpenApi generator (maven plugin)
 - Spring Boot, Spring Data, Spring Security
 - PostgreSQL
 - JPA/Hibernate
@@ -49,6 +50,8 @@ It is also possible to verify the availability of the database using a client su
 - Database: library
 - username: postgres
 - password: postgres
+
+## Business Rules
 
 All endpoints, except for /auth/login, are authenticated and require a Bearer token to be provided in the Authorization header of the request.
 
