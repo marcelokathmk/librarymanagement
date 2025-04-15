@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service responsible for managing book loans.
+ */
 @Service
 public class LoanService {
 
@@ -31,6 +34,14 @@ public class LoanService {
         this.bookService = bookService;
     }
 
+    /**
+     * Method responsible for processing the loan of a specific book.
+     * If the book is not available, it throws an exception; otherwise, it proceeds with the loan.
+     *
+     * @param bookId the book id
+     * @param userLogin the user login
+     * @return The loan details
+     */
     @Transactional
     public Loan borrowBook(Long bookId, String userLogin) {
         User user = authService.findUserByLogin(userLogin);
@@ -45,6 +56,13 @@ public class LoanService {
         return loanRepository.save(loan);
     }
 
+    /**
+     * Checks the availability of a specific book and returns it if available;
+     * otherwise, it throws an exception.
+     *
+     * @param bookId The book id
+     * @return The book
+     */
     private Book getBookIfAvailableForLoan(final Long bookId) {
         Book book = bookService.findBookById(bookId);
 
@@ -56,6 +74,15 @@ public class LoanService {
         return book;
     }
 
+    /**
+     * Service responsible for managing the return of a book.
+     * Searches for loans for a specific book.
+     * Verify if the loan belongs to the given user login
+     *
+     * @param bookId The book id
+     * @param userLogin The user login
+     * @return The loan with the returned date and returned flag value updated.
+     */
     @Transactional
     public Loan returnBook(Long bookId, String userLogin) {
         List<Loan> bookLoans = loanRepository.findByBookIdAndReturnDateIsNullAndReturnedIsFalse(bookId);
@@ -81,6 +108,12 @@ public class LoanService {
         return loanRepository.save(loan);
     }
 
+    /**
+     * Fetches the loan history of a specific book.
+     *
+     * @param bookId the book id
+     * @return the loan history
+     */
     public List<Loan> getBookHistory(final Long bookId) {
         return loanRepository.findByBookId(bookId);
     }

@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * Service responsible for managing books in the inventory.
+ */
 @Service
 public class BookService {
 
@@ -25,6 +28,12 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
+    /**
+     * Fetches a book by its unique identifier.
+     *
+     * @param bookId the book id
+     * @return the book
+     */
     public Book findBookById(final Long bookId) {
         Optional<Book> existingBook = bookRepository.findByIdAndActiveIsTrue(bookId);
         if (existingBook.isEmpty()) {
@@ -33,11 +42,24 @@ public class BookService {
         return existingBook.get();
     }
 
+    /**
+     * Creates a new book in the inventory.
+     *
+     * @param bookApiRequest the api request object
+     * @return the created book
+     */
     public Book createBook(final BookApiRequest bookApiRequest) {
         Book book = BookFactory.buildBookForCreation(bookApiRequest);
         return bookRepository.save(book);
     }
 
+    /**
+     * Updates the book details.
+     *
+     * @param bookId the book id
+     * @param bookApiRequest the api request object
+     * @return the updated book.
+     */
     @Transactional
     public Book updateBook(final Long bookId, final BookApiRequest bookApiRequest) {
         Book existingBook = findBookById(bookId);
@@ -45,6 +67,11 @@ public class BookService {
         return bookRepository.save(updatedBook);
     }
 
+    /**
+     * Logically deletes a book by changing the 'active' field to false.
+     *
+     * @param bookId the book id
+     */
     @Transactional
     public void deleteBook(final Long bookId) {
         Book bookForDeletion = findBookById(bookId);
@@ -52,6 +79,18 @@ public class BookService {
         bookRepository.save(bookForDeletion);
     }
 
+    /**
+     * Fetches books based on the provided filters.
+     * The filters do not need to have exact values, as the 'like' mechanism is used in the database queries.
+     * The query is paginated, allowing the limitation of the number of books returned, and also supports searching by a specific page.
+     *
+     * @param title the title
+     * @param author the author
+     * @param genre the genre
+     * @param page the page
+     * @param limit the limit of rows to be returned
+     * @return the page of books
+     */
     public Page<Book> searchBooks(String title, String author, String genre, Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Specification<Book> specification = Specification.where(BookSpecifications.hasTitle(title))

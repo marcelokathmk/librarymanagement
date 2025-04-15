@@ -1,4 +1,4 @@
-# Project: Library Management
+# Microservice: Library Management
 
 ## Technologies used
 
@@ -68,6 +68,8 @@ User with role: ROLE_OWNER
 User with role: ROLE_CLIENT
 - login: user_client
 - password: myclientpasswordencrypted
+
+## REST Api´s, Roles and Authorization
 
 With the ROLE_OWNER role, it is possible to execute the following REST resources:
 
