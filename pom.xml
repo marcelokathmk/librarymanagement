@@ -26,6 +26,7 @@
 		<librarymanagement-api.version>1.0.0-SNAPSHOT</librarymanagement-api.version>
 
 		<java.version>17</java.version>
+		<maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
 		<openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
 		<jackson.core.version>2.18.3</jackson.core.version>
 		<swagger.annotations.version>2.2.29</swagger.annotations.version>
